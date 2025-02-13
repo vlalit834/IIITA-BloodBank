@@ -67,9 +67,13 @@ const loginController = async (req, res) => {
       });
     }
     //password is matched now
-    const token = jwt.sign({ userID: exisitingUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
+    const token = jwt.sign(
+      { userID: exisitingUser._id },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
     return res.status(200).send({
       succes: true,
       message: "Login Successfully",
@@ -87,4 +91,28 @@ const loginController = async (req, res) => {
   }
 };
 
-export { registerController, loginController };
+//Get current User
+const currentUserController = async (req, res) => {
+  try {
+    const user = await userModel.findOne({ _id: req.body.userID });
+    //200 Ok response
+    return res.status(200).send({
+      succes: true,
+      message: "User Fetched Succesfully",
+      user,
+    });
+  } catch (error) {
+    console.log(
+      "authController currentUserController error:".bgRed.black,
+      error
+    );
+    //500 Internal Server Error
+    res.status(500).send({
+      sucess: false,
+      message: "Error in login API",
+      error,
+    });
+  }
+};
+
+export { registerController, loginController, currentUserController };
