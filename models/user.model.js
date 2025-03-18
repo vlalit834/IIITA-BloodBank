@@ -4,22 +4,22 @@ const userSchema = new mongoose.Schema(
   {
     role: {
       type: String,
-      require: [true, "*"],
-      enum: ["admmin", "organization", "user", "hospital"],
+      required: [true, "*"],
+      enum: ["admin", "organisation", "donor", "hospital"],
     },
     name: {
       type: String,
-      require: function () {
+      required: function () {
         if (this.role === "user" || this.role === "admin") {
           return true;
         }
         return false;
       },
     },
-    organizationName: {
+    organisationName: {
       type: String,
       required: function () {
-        if (this.role === "organization") {
+        if (this.role === "organisation") {
           return true;
         }
         return false;
@@ -36,12 +36,12 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      require: [true, "*"],
+      required: [true, "*"],
       unique: true,
     },
     password: {
       type: String,
-      require: [true, "*"],
+      required: [true, "*"],
     },
     website: {
       type: String,
@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: Number,
-      require: [true, "*"],
+      required: [true, "*"],
     },
   },
   { timestamps: true }

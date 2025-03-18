@@ -54,13 +54,21 @@ const loginController = async (req, res) => {
         message: "User Not found",
       });
     }
-
+    //check role
+    if (exisitingUser.role !== req.body.role) {
+      //500 internal server error
+      res.status(500).send({
+        succes: false,
+        message: "Role does not match",
+      });
+    }
     //compare password
     const comparePassword = await bcrypt.compare(
       req.body.password,
       exisitingUser.password
     );
     if (!comparePassword) {
+      //500 internal server error
       return res.status(500).send({
         succes: false,
         message: "Invalid Credentials",
@@ -74,6 +82,7 @@ const loginController = async (req, res) => {
         expiresIn: "1d",
       }
     );
+    //ok response
     return res.status(200).send({
       succes: true,
       message: "Login Successfully",

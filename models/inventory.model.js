@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-const inventorySchema = new mongooose.Schema(
+const inventorySchema = new mongoose.Schema(
   {
-    invetoryType: {
+    inventoryType: {
       type: String,
       required: [true, "*"],
       enum: ["in", "out"],
@@ -25,14 +25,14 @@ const inventorySchema = new mongooose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
       required: function () {
-        return this.invetoryType === "out";
+        return this.inventoryType === "out";
       },
     },
     donor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
       required: function () {
-        return this.invetoryType === "in";
+        return this.inventoryType === "in";
       },
     },
   },

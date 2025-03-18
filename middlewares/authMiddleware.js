@@ -15,7 +15,7 @@ const authMiddleware = async (req, res, next) => {
         next();
       }
     });
-  } catch (err) {
+  } catch (error) {
     console.log("authMiddleware error:".bgRed.black, error);
     //401 Unauthorized access
     res.status(401).send({
